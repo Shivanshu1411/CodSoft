@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            transition: background-color 1s ease-in-out;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .box {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 {
+            color: #2196F3;
+        }
+
+        /* To-Do List Styles */
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .todo-item:hover {
+            background-color: #f0f0f0;
+        }
+        .todo-actions {
+            display: flex;
+        }
+        .delete-button {
+            background-color: #FF5722;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+
+        /* Thought of the Day Styles */
+        .thought {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* Background Color Slideshow Styles */
+        .color-slideshow {
+            animation: changeBackgroundColor 5s infinite;
+        }
+
+        @keyframes changeBackgroundColor {
+            0%, 20% {
+                background-color: #f44336; /* Red */
+            }
+            40% {
+                background-color: #FFC107; /* Amber */
+            }
+            60% {
+                background-color: #2196F3; /* Blue */
+            }
+            80%, 100% {
+                background-color: #4CAF50; /* Green */
+            }
+        }
+
+        /* Highlighted Text */
+        .highlighted {
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body class="color-slideshow">
+    <div class="container">
+        <h1>To-Do List</h1>
+
+        <div class="box">
+            <h2>Add Task</h2>
+            <input type="text" id="taskInput" placeholder="Enter task..." />
+            <button class="add-button" onclick="addTask()">Add</button>
+        </div>
+
+        <div class="box">
+            <h2>Tasks</h2>
+            <ul class="todo-list" id="taskList">
+                <!-- Tasks will be dynamically added here -->
+            </ul>
+        </div>
+
+        <div class="thought">
+            <h2>Thought of the Day</h2>
+            <textarea id="thoughtOfTheDay" rows="4" cols="50" placeholder="Write your thought..."></textarea>
+            <button class="add-button" onclick="setThought()">Set Thought</button>
+            <div id="displayThought"></div>
+        </div>
+    </div>
+
+    <script>
+        // To-Do List
+        const taskInput = document.getElementById("taskInput");
+        const taskList = document.getElementById("taskList");
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText !== "") {
+                const taskItem = document.createElement("li");
+                taskItem.className = "todo-item";
+                taskItem.innerHTML = `
+                    <span class="highlighted">${taskText}</span>
+                    <div class="todo-actions">
+                        <button class="delete-button" onclick="deleteTask(this)">X</button>
+                    </div>
+                `;
+                taskList.appendChild(taskItem);
+                taskInput.value = "";
+            }
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            taskList.removeChild(taskItem);
+        }
+
+        // Thought of the Day
+        function setThought() {
+            const thoughtOfTheDay = document.getElementById("thoughtOfTheDay").value.trim();
+            const displayThought = document.getElementById("displayThought");
+            if (thoughtOfTheDay !== "") {
+                displayThought.innerHTML = `<p class="highlighted">${thoughtOfTheDay}</p>`;
+            } else {
+                displayThought.innerHTML = "";
+            }
+        }
+    </script>
+</body>
+</html>
